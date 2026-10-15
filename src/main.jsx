@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 
-function App() {
-  return (
-    <div className="page">
-      <header><a className="brand" href="/" aria-label="MGX Electric home">MGX<span> ELECTRIC</span><span className="spark" aria-hidden="true">↗</span></a></header>
-      <main>
-        <p className="eyebrow"><span /> A NEW CONNECTION</p>
-        <h1>Powering<br />what’s <em>next.</em></h1>
-        <p className="intro">The new home of MGX Electric.<br />Our website is taking shape. Stay tuned.</p>
-        <div className="status"><span aria-hidden="true">↗</span> Website coming soon</div>
-      </main>
-      <footer><span>MGX ELECTRIC</span><span>A brighter beginning.</span></footer>
-    </div>
-  );
+const Arrow = () => <span aria-hidden="true">↗</span>;
+function Logo(){return <a className="logo" href="#acasa" aria-label="MGX Instalații electrice — acasă"><span>MG<span className="logo-x">X</span><b>ϟ</b></span><small>INSTALAȚII ELECTRICE</small></a>}
+const services = [
+  ['⌂','Instalații rezidențiale','Instalații electrice pentru case și apartamente. Circuite, prize și iluminat adaptate felului în care locuiești.'],
+  ['▥','Spații comerciale','Soluții pentru birouri și spații comerciale, de la distribuția energiei până la iluminatul funcțional.'],
+  ['⌁','Instalații industriale','Instalații pentru spații de producție și echipamente, cu atenție la cerințele fiecărui proiect.'],
+  ['▤','Tablouri electrice','Montaj, organizare și modernizare tablouri electrice, pentru o distribuție clară și sigură.'],
+  ['◇','Verificări PRAM','Verificări și măsurători pentru evaluarea instalației și identificarea problemelor de siguranță.'],
+  ['ϟ','Mentenanță și reparații','Diagnosticarea defecțiunilor, intervenții și întreținere pentru instalații care funcționează corect.'],
+];
+const photo = (id, w=1200) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=85`;
+const images = {hero:photo('photo-1621905251189-08b45d6a269e',1800), home:photo('photo-1600210492486-724fe5c67fb0',900), office:photo('photo-1497366754035-f200968a6e72',900)};
+function App(){
+ const [menu,setMenu]=useState(false);
+ const [copied,setCopied]=useState(false);
+ function copyBrief(){navigator.clipboard?.writeText('Bună ziua! Doresc o ofertă pentru o lucrare de instalații electrice. Tipul spațiului: __. Lucrarea necesară: __. Termenul dorit: __.').then(()=>setCopied(true)).catch(()=>setCopied(false));}
+ return <>
+ <header className="header"><div className="container nav"><Logo/><button className="menu-toggle" onClick={()=>setMenu(!menu)} aria-expanded={menu} aria-label="Deschide meniul">{menu?'Închide ✕':'Meniu ☰'}</button><nav className={menu?'open':''} aria-label="Navigare principală">{[['acasa','Acasă'],['despre','Despre noi'],['servicii','Servicii'],['proiecte','Proiecte'],['contact','Contact']].map(([id,label])=><a key={id} href={`#${id}`} onClick={()=>setMenu(false)}>{label}</a>)}<a className="button small" href="#contact" onClick={()=>setMenu(false)}>Ofertă rapidă <Arrow/></a></nav></div></header>
+ <main>
+ <section id="acasa" className="hero"><img className="hero-image" src={images.hero} alt="Lucrări la o instalație electrică"/><div className="container hero-content"><p className="eyebrow"><i/> MGX · INSTALAȚII ELECTRICE</p><h1>Energie pentru<br/>proiectele tale.<br/><span>Siguranță la fiecare pas.</span></h1><p className="hero-text">Instalații electrice pentru locuințe, spații comerciale și industriale. De la primul circuit, până la ultimul detaliu.</p><div className="actions"><a className="button" href="#servicii">Descoperă serviciile <Arrow/></a><a className="button outline" href="#contact">Hai să discutăm <Arrow/></a></div><div className="hero-bottom"><span>PRECIZIE. RESPONSABILITATE. ENERGIE.</span><a href="#despre">Descoperă MGX ↓</a></div></div></section>
+ <div className="trust-strip"><div className="container trust-grid">{[['♧','Siguranță','Atenție la fiecare conexiune'],['ϟ','Calitate','Execuție îngrijită, de la început'],['◷','Eficiență','Soluții potrivite proiectului'],['◎','Comunicare','Claritate în fiecare etapă']].map(([icon,title,text])=><div className="trust-item" key={title}><span className="line-icon">{icon}</span><div><h3>{title}</h3><p>{text}</p></div></div>)}</div></div>
+ <section id="despre" className="section about"><div className="container about-grid"><div className="about-photo"><img src={images.hero} alt="Electrician lucrând cu atenție la echipamente" loading="lazy"/><div className="photo-tag"><span>ϟ</span> O lucrare bună începe<br/>cu atenția la detalii.</div></div><div><p className="eyebrow dark">01 / DESPRE MGX</p><h2>În spatele fiecărui<br/>spațiu, o instalație<br/><em>bine făcută.</em></h2><p className="body-copy">Confortul de zi cu zi începe cu lucrurile pe care nu le vezi. Cu circuite gândite corect, conexiuni sigure și o execuție atentă.</p><p className="body-copy">La MGX, abordăm fiecare lucrare pornind de la nevoile spațiului tău. Îți explicăm soluțiile și urmărim fiecare detaliu, de la planificare până la verificarea finală.</p><div className="about-notes"><span>✓ Soluții adaptate spațiului</span><span>✓ Atenție la siguranță</span><span>✓ Execuție și verificare</span></div><a className="text-link" href="#contact">Să vorbim despre proiectul tău <Arrow/></a></div></div></section>
+ <section id="servicii" className="section services"><div className="container"><div className="section-heading"><div><p className="eyebrow dark">02 / CE PUTEM FACE PENTRU TINE</p><h2>Soluții electrice.<br/><em>De la A la Z.</em></h2></div><p>O instalație nouă sau un spațiu care are nevoie de o schimbare? Găsim soluția potrivită pentru lucrarea ta.</p></div><div className="service-grid">{services.map(([icon,title,desc],i)=><article className="service-card" key={title}><div className="card-top"><span className="service-icon" aria-hidden="true">{icon}</span><span className="card-number">0{i+1}</span></div><h3>{title}</h3><p>{desc}</p><a href="#contact" aria-label={`Discută despre ${title.toLowerCase()}`}>Discută proiectul <Arrow/></a></article>)}</div></div></section>
+ <section className="quote-band"><div className="container"><span className="big-bolt" aria-hidden="true">ϟ</span><div><h2>Ai un proiect în minte?</h2><p>Primul pas e simplu. Spune-ne de ce ai nevoie.</p></div><a href="#contact" className="button">Cere o ofertă <Arrow/></a></div></section>
+ <section id="proiecte" className="section projects"><div className="container"><div className="section-heading"><div><p className="eyebrow">03 / POSIBILITĂȚI PENTRU SPAȚIUL TĂU</p><h2>Același standard.<br/><em>În orice spațiu.</em></h2></div><p>De la atmosfera unei locuințe la funcționalitatea unui spațiu de lucru. Imagini de inspirație pentru tipurile de lucrări pe care le putem discuta.</p></div><div className="project-grid">{[[images.home,'01','Rezidențial','Confortul începe acasă.'],[images.office,'02','Comercial','Energie pentru afacerea ta.'],[images.hero,'03','Instalații și tablouri','Fiecare circuit contează.']].map(([img,n,title,desc])=><article className="project-card" key={n}><div className="project-photo"><img src={img} alt={title} loading="lazy"/><span>IMAGINE DE PREZENTARE</span></div><div className="project-caption"><div><small>{n} / {title}</small><h3>{desc}</h3></div><a href="#contact" aria-label={`Solicită informații pentru ${title}`}><Arrow/></a></div></article>)}</div></div></section>
+ <section className="section process"><div className="container"><p className="eyebrow dark">04 / CUM LUCRĂM</p><h2>Clar, de la prima discuție<br/><em>până la ultima verificare.</em></h2><div className="process-grid">{[['01','Discutăm','Ne spui ce ai nevoie și înțelegem cerințele spațiului.'],['02','Stabilim soluția','Clarificăm lucrarea, etapele și detaliile ofertei.'],['03','Executăm','Realizăm instalația cu atenție la fiecare detaliu.'],['04','Verificăm','Verificăm lucrarea și îți explicăm ce trebuie să știi.']].map(([n,t,d])=><article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
+ <section id="contact" className="section contact"><div className="container contact-grid"><div><p className="eyebrow">05 / HAI SĂ VORBIM</p><h2>Proiectul tău.<br/>Următoarea<br/><em>conexiune.</em></h2><p className="body-copy">O întrebare, o renovare sau o instalație de la zero? Pregătește câteva detalii și hai să găsim punctul de pornire.</p></div><div className="contact-panel"><span className="contact-label">DATE DE CONTACT ÎN CURS DE ACTUALIZARE</span><p className="phone-placeholder">07XX XXX XXX</p><p>Numărul de telefon va fi disponibil în curând.</p><div className="brief"><h3>Ce să incluzi în cererea de ofertă</h3><ul><li>Tipul spațiului: locuință, birou sau spațiu industrial</li><li>Lucrarea de care ai nevoie</li><li>Termenul dorit și detalii utile</li></ul><button className="button" onClick={copyBrief}>{copied?'Mesaj copiat ✓':'Copiază un model de mesaj'} <Arrow/></button><span className="copy-status" role="status">{copied?'Poți completa mesajul și îl poți trimite când datele de contact sunt disponibile.':''}</span></div></div></div></section>
+ </main><footer><div className="container footer-top"><Logo/><p>Instalații electrice.<br/>Gândite corect. Executate cu grijă.</p><a href="#acasa">Înapoi sus ↑</a></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} MGX Electric. Toate drepturile rezervate.</span><span>Puterea detaliilor bine făcute.</span></div></footer>
+ </>;
 }
-
-createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);
+createRoot(document.getElementById('root')).render(<React.StrictMode><App/></React.StrictMode>);
