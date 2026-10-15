@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './styles.css';
 
 const Arrow = () => <span aria-hidden="true">↗</span>;
-function Logo(){return <a className="logo" href="#acasa" aria-label="MGX Instalații electrice — acasă"><span>MG<span className="logo-x">X</span><b>ϟ</b></span><small>INSTALAȚII ELECTRICE</small></a>}
+function Logo(){return <a className="logo" href="#acasa" aria-label="MGX Instalații electrice — acasă"><img src="/mgx-logo.png" alt="MGX Instalații Electrice" width="1800" height="882" /></a>}
 const services = [
   ['⌂','Instalații rezidențiale','Instalații electrice pentru case și apartamente. Circuite, prize și iluminat adaptate felului în care locuiești.'],
   ['▥','Spații comerciale','Soluții pentru birouri și spații comerciale, de la distribuția energiei până la iluminatul funcțional.'],
