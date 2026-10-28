@@ -53,13 +53,6 @@ function HeroElectricity(){
   <g className="hero-circuit-nodes"><circle cx="425" cy="380" r="3"/><circle cx="675" cy="330" r="3"/><circle cx="530" cy="220" r="3"/></g>
  </svg></div>;
 }
-function PageCircuits(){
- return <div className="page-circuits" aria-hidden="true">{['left','right'].map(side=><svg key={side} className={`page-circuit page-circuit-${side}`} viewBox="0 0 70 1200" preserveAspectRatio="none" fill="none">
-  <path className="page-circuit-track" d="M16-100V140l30 30v180l-26 26v220l26 26v180l-30 30v568M52-200V70L30 92v200l28 28v180l-26 26v200l26 26v220l-28 28v400"/>
-  <path className="page-circuit-flow" pathLength="1000" d="M16-100V140l30 30v180l-26 26v220l26 26v180l-30 30v568"/>
-  <path className="page-circuit-flow secondary" pathLength="1000" d="M52-200V70L30 92v200l28 28v180l-26 26v200l26 26v220l-28 28v400"/>
- </svg>)}</div>;
-}
 function ElectricIntro(){
  const [visible,setVisible]=useState(()=>!window.matchMedia('(prefers-reduced-motion: reduce)').matches);
  useEffect(()=>{
@@ -122,10 +115,10 @@ function App(){
    entries.forEach(entry=>{
     if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}
    });
-  },{threshold:0,rootMargin:'0px 0px -45px 0px'});
+  },{threshold:0,rootMargin:'0px 0px -150px 0px'});
   elements.forEach(element=>{
    // Keep content already in view visible, including direct section links.
-   if(element.getBoundingClientRect().top<window.innerHeight-45) return;
+   if(element.getBoundingClientRect().top<window.innerHeight-150) return;
    element.classList.add('scroll-reveal');
    observer.observe(element);
   });
@@ -137,10 +130,9 @@ function App(){
  function copyBrief(){navigator.clipboard?.writeText('Bună ziua! Doresc o ofertă pentru o lucrare de instalații electrice. Tipul spațiului: __. Lucrarea necesară: __. Termenul dorit: __.').then(()=>setCopied(true)).catch(()=>setCopied(false));}
  return <>
  <ElectricIntro/>
- <PageCircuits/>
  <header className="header"><div className="container nav"><Logo/><button className="menu-toggle" onClick={()=>setMenu(!menu)} aria-expanded={menu} aria-label={menu?'Închide meniul':'Deschide meniul'}><span className="menu-bars" aria-hidden="true"><span/><span/><span/></span></button><nav className={menu?'open':''} aria-label="Navigare principală">{[['acasa','Acasă'],['despre','Despre noi'],['servicii','Servicii'],['proiecte','Proiecte'],['contact','Contact']].map(([id,label])=><a key={id} href={`#${id}`} className={activeSection===id?'active':undefined} aria-current={activeSection===id?'location':undefined} onClick={()=>setMenu(false)}>{label}</a>)}<a className="button small" href="#contact" onClick={()=>setMenu(false)}>Ofertă rapidă <Arrow/></a></nav></div></header>
  <main>
- <section id="acasa" className="hero"><img className="hero-image" src={images.hero} alt="Lucrări la o instalație electrică"/><HeroElectricity/><div className="container hero-content"><p className="eyebrow"><i/> MGX · INSTALAȚII ELECTRICE</p><h1>Energie pentru<br/>proiectele tale.<br/><span>Siguranță la fiecare pas.</span></h1><p className="hero-text">Instalații electrice pentru locuințe, spații comerciale și industriale. De la primul circuit, până la ultimul detaliu.</p><div className="actions"><a className="button" href="#servicii">Descoperă serviciile <Arrow/></a><a className="button outline" href="#contact">Hai să discutăm <Arrow/></a></div><div className="hero-bottom"><span>PRECIZIE. RESPONSABILITATE. ENERGIE.</span><a href="#despre">Descoperă MGX <Icon name="down"/></a></div></div></section>
+ <section id="acasa" className="hero"><img className="hero-image" src={images.hero} alt="Lucrări la o instalație electrică"/><HeroElectricity/><div className="container hero-content"><p className="eyebrow"><i/> MGX · INSTALAȚII ELECTRICE</p><h1>Energie pentru<br/>proiectele tale.<br/><span>Siguranță la fiecare pas.</span></h1><p className="hero-text">Instalații electrice pentru locuințe, spații comerciale și industriale. De la primul circuit, până la ultimul detaliu.</p><div className="actions"><a className="button" href="#servicii">Descoperă serviciile <Arrow/></a><a className="button outline" href="#contact">Hai să discutăm <Arrow/></a></div></div></section>
  <div className="trust-strip"><div className="container trust-grid">{[['shield','Siguranță','Atenție la fiecare conexiune'],['badge','Calitate','Execuție îngrijită, de la început'],['bolt','Eficiență','Soluții potrivite proiectului'],['message','Comunicare','Claritate în fiecare etapă']].map(([icon,title,text])=><div className="trust-item" key={title}><span className="line-icon"><Icon name={icon}/></span><div><h3>{title}</h3><p>{text}</p></div></div>)}</div></div>
  <section id="despre" className="section about"><div className="container about-grid"><div className="about-photo"><img src={images.hero} alt="Electrician lucrând cu atenție la echipamente" loading="lazy"/><div className="photo-tag"><Icon name="bolt"/> O lucrare bună începe<br/>cu atenția la detalii.</div></div><div><p className="eyebrow dark">01 / DESPRE MGX</p><h2>În spatele fiecărui<br/>spațiu, o instalație<br/><em>bine făcută.</em></h2><p className="body-copy">Confortul de zi cu zi începe cu lucrurile pe care nu le vezi. Cu circuite gândite corect, conexiuni sigure și o execuție atentă.</p><p className="body-copy">La MGX, abordăm fiecare lucrare pornind de la nevoile spațiului tău. Îți explicăm soluțiile și urmărim fiecare detaliu, de la planificare până la verificarea finală.</p><div className="about-notes"><span><Icon name="check"/> Soluții adaptate spațiului</span><span><Icon name="check"/> Atenție la siguranță</span><span><Icon name="check"/> Execuție și verificare</span></div><a className="text-link" href="#contact">Să vorbim despre proiectul tău <Arrow/></a></div></div></section>
  <section id="servicii" className="section services"><div className="container"><div className="section-heading"><div><p className="eyebrow dark">02 / CE PUTEM FACE PENTRU TINE</p><h2>Soluții electrice.<br/><em>De la A la Z.</em></h2></div><p>O instalație nouă sau un spațiu care are nevoie de o schimbare? Găsim soluția potrivită pentru lucrarea ta.</p></div><div className="service-grid">{services.map(([icon,title,desc],i)=><article className="service-card" key={title}><div className="card-top"><span className="service-icon" aria-hidden="true"><Icon name={icon}/></span><span className="card-number">0{i+1}</span></div><h3>{title}</h3><p>{desc}</p><a href="#contact" aria-label={`Discută despre ${title.toLowerCase()}`}>Discută proiectul <Arrow/></a></article>)}</div></div></section>
